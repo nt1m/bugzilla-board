@@ -50,7 +50,13 @@ a:any-link:not(:hover) {
 }
 
 #status {
+  margin-top: 2em;
   font-weight: bold;
+}
+
+.loading #boards,
+#status:not(:empty) + #boards {
+  display: none;
 }
 
 #query {

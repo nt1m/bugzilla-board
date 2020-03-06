@@ -18,10 +18,13 @@ function getBug(bug) {
     .then(r => r.bugs[0]);
 }
 
-function getQuickSearchResults(query) {
-  return fetch(`${BUGZILLA_DOMAIN}/rest/bug?quicksearch=${encodeURIComponent(query)}&include_fields=${USED_FIELDS.join(",")}`)
-    .then(r => r.json())
-    .then(r => r.bugs);
+async function getQuickSearchResults(query) {
+  const json = await fetch(`${BUGZILLA_DOMAIN}/rest/bug?quicksearch=${encodeURIComponent(query)}&include_fields=${USED_FIELDS.join(",")}`)
+    .then(r => r.json());
+  if (json.error) {
+    throw new Error(json.message);
+  }
+  return json.bugs;
 }
 
 async function getBoards(query) {
@@ -32,10 +35,9 @@ async function getBoards(query) {
     not_started: [],
   };
   for (let data of results) {
-    // let data = await getBug(bug);
     if (data.resolution == "FIXED") {
       boards.done.push(data);
-    } else if (data.status == "ASSIGNED") {
+    } else if (data.status == "ASSIGNED" || !data.assigned_to.includes("nobody")) {
       boards.in_progress.push(data);
     } else {
       boards.not_started.push(data);
@@ -47,7 +49,15 @@ async function getBoards(query) {
 async function loadBoard(query) {
   document.body.classList.add("loading");
 
-  let boards = await getBoards(query);
+  let boards;
+  try {
+    boards = await getBoards(query);
+  } catch (e) {
+    console.log(e);
+    document.getElementById("status").textContent = e.message;
+    document.body.classList.remove("loading");
+    return;
+  }
 
   let bugTemplate = document.getElementById("bug-template").content;
   for (let board in boards) {
@@ -57,7 +67,7 @@ async function loadBoard(query) {
       let element = bugTemplate.cloneNode(true);
       element.querySelector(".bug").href = BUGZILLA_DOMAIN + bug.id;
       element.querySelector(".bug-title").textContent = bug.summary;
-      if (bug.status != "NEW") {
+      if (board != "not_started") {
         element.querySelector(".bug-assignee").textContent = bug.assigned_to_detail.nick || bug.assigned_to_detail.email;
       }
       element.querySelector(".bug-type").textContent = bug.type;
