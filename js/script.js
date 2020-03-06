@@ -65,7 +65,7 @@ async function loadBoard(query) {
     container.textContent = "";
     container.append(...boards[board].map(bug => {
       let element = bugTemplate.cloneNode(true);
-      element.querySelector(".bug").href = BUGZILLA_DOMAIN + bug.id;
+      element.querySelector(".bug").href = BUGZILLA_DOMAIN + "/" + bug.id;
       element.querySelector(".bug-title").textContent = bug.summary;
       if (board != "not_started") {
         element.querySelector(".bug-assignee").textContent = bug.assigned_to_detail.nick || bug.assigned_to_detail.email;
