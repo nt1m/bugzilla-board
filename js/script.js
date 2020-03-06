@@ -89,8 +89,10 @@ async function loadBoard(query) {
     query = "ALL blocked:" + bugId;
   }
 
-  loadBoard(query);
-  queryInput.value = query;
+  if (query) {
+    loadBoard(query);
+    queryInput.value = query;
+  }
 })();
 
 

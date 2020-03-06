@@ -24,7 +24,7 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   font: message-box;
-  font-size: 1em;
+  font-size: 14px;
   margin: 0;
   padding: 2em;
 }
@@ -66,7 +66,7 @@ a:any-link:not(:hover) {
   display: block;
 }
 
-#bug-id:focus {
+#query:focus {
   border-color: #0060df;
 }
 
