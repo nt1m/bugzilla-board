@@ -1,0 +1,115 @@
+:root {
+  --background-color: #fff;
+  --text-color: #333;
+  --border-color: #dedede;
+  --box-background-color: #f1f1f8;
+  --card-background-color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #333;
+    --text-color: #eee;
+    --border-color: #555;
+    --box-background-color: #111;
+    --card-background-color: #555;
+  }
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font: message-box;
+  font-size: 1em;
+  margin: 0;
+  padding: 2em;
+}
+
+.loading #bug-title::before {
+  content: "Loading...";
+}
+
+#bug-title {
+  margin-top: 2em;
+  font-weight: bold;
+}
+
+#bug-id {
+  background-color: var(--box-background-color);
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+  color: inherit;
+  margin: auto;
+  padding: 1em;
+  width: 40ch;
+  max-width: 100%;
+  font: inherit;
+  display: block;
+}
+
+#bug-id:focus {
+  border-color: #0060df;
+}
+
+#boards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  margin-top: 2em;
+}
+
+.board {
+  display: block;
+  background-color: var(--box-background-color);
+  border: 1px solid var(--border-color);
+  flex: 1 1;
+  min-width: 100px;
+  border-radius: 4px;
+}
+
+.bug {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  background-color: var(--card-background-color);
+  border-radius: 4px;
+  box-shadow: rgba(12, 12, 13, 0.1) 0px 1px 4px;
+  margin: 1em;
+  margin-top: 0;
+  padding: 1em;
+  overflow: hidden;
+}
+
+.bug:focus {
+  outline: 3px solid #0060df;
+  -moz-outline-radius: 4px;
+}
+
+.bug > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bug-type,
+.bug-assignee,
+.bug-keywords {
+  display: block;
+}
+
+.bug-title {
+  font-size: 1.1em;
+}
+
+.bug-component {
+  border-radius: 4px;
+  padding: 0.5em;
+  margin-top: 0.5em;
+  display: inline-block;
+}
+
+.board::before {
+  content: attr(data-title);
+  display: block;
+  margin: 1em 1em;
+  font-weight: 500;
+}
