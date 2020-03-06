@@ -1,4 +1,4 @@
-const BUGZILLA_DOMAIN = "https://bugzilla.mozilla.org/";
+const BUGZILLA_DOMAIN = "https://bugzilla.mozilla.org";
 const USED_FIELDS = [
   "id",
   "summary",
@@ -18,15 +18,21 @@ function getBug(bug) {
     .then(r => r.bugs[0]);
 }
 
-async function getBoards(bugId) {
-  let metadata = await getBug(bugId);
+function getQuickSearchResults(query) {
+  return fetch(`${BUGZILLA_DOMAIN}/rest/bug?quicksearch=${encodeURIComponent(query)}&include_fields=${USED_FIELDS.join(",")}`)
+    .then(r => r.json())
+    .then(r => r.bugs);
+}
+
+async function getBoards(query) {
+  let results = await getQuickSearchResults(query);
   let boards = {
     done: [],
     in_progress: [],
     not_started: [],
   };
-  for (let bug of metadata.depends_on) {
-    let data = await getBug(bug);
+  for (let data of results) {
+    // let data = await getBug(bug);
     if (data.resolution == "FIXED") {
       boards.done.push(data);
     } else if (data.status == "ASSIGNED") {
@@ -35,17 +41,13 @@ async function getBoards(bugId) {
       boards.not_started.push(data);
     }
   }
-  return { boards, metadata };
+  return boards;
 }
 
-async function loadBug(bugId) {
+async function loadBoard(query) {
   document.body.classList.add("loading");
 
-  let { metadata, boards } = await getBoards(bugId);
-
-  document.getElementById("bug-title").textContent =
-    metadata.id + " - " + metadata.summary;
-  document.getElementById("bug-title").href = BUGZILLA_DOMAIN + metadata.id;
+  let boards = await getBoards(query);
 
   let bugTemplate = document.getElementById("bug-template").content;
   for (let board in boards) {
@@ -75,17 +77,20 @@ async function loadBug(bugId) {
 }
 
 (function init() {
-  let idInput = document.getElementById("bug-id");
-  idInput.addEventListener("change", () => {
-    loadBug(idInput.value);
+  let queryInput = document.getElementById("query");
+  queryInput.addEventListener("change", () => {
+    loadBoard(queryInput.value);
   });
 
   let searchParams = new URLSearchParams(location.search);
+  let query = searchParams.get("query");
   let bugId = searchParams.get("id");
-  if (bugId) {
-    loadBug(bugId);
-    idInput.value = bugId;
+  if (!query && bugId) {
+    query = "ALL blocked:" + bugId;
   }
+
+  loadBoard(query);
+  queryInput.value = query;
 })();
 
 

@@ -1,6 +1,8 @@
 :root {
   --background-color: #fff;
   --text-color: #333;
+  --link-color: #082840;
+  --link-color-visited: #9248c8;
   --border-color: #dedede;
   --box-background-color: #f1f1f8;
   --card-background-color: #fff;
@@ -10,6 +12,8 @@
   :root {
     --background-color: #333;
     --text-color: #eee;
+    --link-color: #45a1ff;
+    --link-color-visited: #c876ff;
     --border-color: #555;
     --box-background-color: #111;
     --card-background-color: #555;
@@ -25,21 +29,36 @@ body {
   padding: 2em;
 }
 
-.loading #bug-title::before {
+a:any-link {
+  color: var(--link-color);
+}
+a:any-link:visited {
+  color: var(--link-color-visited);
+}
+a:any-link:not(:hover) {
+  text-decoration: none;
+}
+
+#header {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.loading #status::before {
   content: "Loading...";
 }
 
-#bug-title {
-  margin-top: 2em;
+#status {
   font-weight: bold;
 }
 
-#bug-id {
+#query {
   background-color: var(--box-background-color);
   border: 2px solid var(--border-color);
   border-radius: 4px;
   color: inherit;
-  margin: auto;
+  flex-grow: 1;
   padding: 1em;
   width: 40ch;
   max-width: 100%;
@@ -63,19 +82,19 @@ body {
   background-color: var(--box-background-color);
   border: 1px solid var(--border-color);
   flex: 1 1;
-  min-width: 100px;
+  min-width: 200px;
   border-radius: 4px;
+  padding: 1em;
 }
 
 .bug {
-  color: inherit;
+  color: inherit !important;
   text-decoration: none;
   display: block;
   background-color: var(--card-background-color);
   border-radius: 4px;
   box-shadow: rgba(12, 12, 13, 0.1) 0px 1px 4px;
-  margin: 1em;
-  margin-top: 0;
+  margin: 1em 0;
   padding: 1em;
   overflow: hidden;
 }
@@ -110,6 +129,11 @@ body {
 .board::before {
   content: attr(data-title);
   display: block;
-  margin: 1em 1em;
   font-weight: 500;
+}
+
+.board:empty::after {
+  content: "No results";
+  display: block;
+  margin-top: 1em;
 }

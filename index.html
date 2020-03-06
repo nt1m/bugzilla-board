@@ -1,21 +1,31 @@
-<link rel="stylesheet" href="css/style.css">
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bugzilla board</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <template id="bug-template">
+    <a class="bug" target="_blank">
+      <span class="bug-type"></span>
+      <h1 class="bug-title"></h1>
+      <span class="bug-assignee"></span>
+      <span class="bug-keywords"></span>
+      <span class="bug-component"></span>
+    </a>
+  </template>
 
-<template id="bug-template">
-  <a class="bug" target="_blank">
-    <span class="bug-type"></span>
-    <h1 class="bug-title"></h1>
-    <span class="bug-assignee"></span>
-    <span class="bug-keywords"></span>
-    <span class="bug-component"></span>
-  </a>
-</template>
+  <div id="header">
+    <input type="text" id="query" placeholder="Enter quicksearch query">
+    <span id="status"></span>
+    <a href="https://bugzilla.mozilla.org/page.cgi?id=quicksearch.html">Quicksearch syntax</a>
+  </div>
+  <div id="boards">
+    <div id="not_started" class="board" data-title="Not Started"></div>
+    <div id="in_progress" class="board" data-title="In Progress"></div>
+    <div id="done" class="board" data-title="Done"></div>
+  </div>
 
-<input type="text" id="bug-id" placeholder="Enter bug id or alias">
-<a id="bug-title" target="_blank"></a>
-<div id="boards">
-  <div id="not_started" class="board" data-title="Not Started"></div>
-  <div id="in_progress" class="board" data-title="In Progress"></div>
-  <div id="done" class="board" data-title="Done"></div>
-</div>
-
-<script src="js/script.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
