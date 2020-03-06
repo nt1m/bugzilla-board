@@ -47,8 +47,14 @@ async function loadBug(bugId) {
       }
       element.querySelector(".bug-type").textContent = bug.type;
       element.querySelector(".bug-keywords").textContent = bug.keywords.join(", ");
-      element.querySelector(".bug-component").textContent = bug.product + " :: " + bug.component;
-      element.querySelector(".bug-component").style.backgroundColor = stringToColor(bug.product + " :: " + bug.component);
+
+      let compStr = bug.product + " :: " + bug.component;
+      let compElement = element.querySelector(".bug-component");
+      compElement.textContent = compStr;
+
+      let {background: compBackground, textColor: compColor } = hashColor(compStr);
+      compElement.style.backgroundColor = compBackground;
+      compElement.style.color = compColor;
       return element;
     }));
   }
@@ -69,8 +75,8 @@ async function loadBug(bugId) {
   }
 })();
 
-// From https://www.designedbyaturtle.co.uk/convert-string-to-hexidecimal-colour-with-javascript-vanilla/
-function hashCode(str) {
+
+function hashCode(str) { // java String#hashCode
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
@@ -78,12 +84,17 @@ function hashCode(str) {
   return hash;
 }
 
-function stringToColor(str) {
-  let i = hashCode(str);
-  let hex = ((i >> 24) & 0xFF).toString(16) +
-    ((i >> 16) & 0xFF).toString(16) +
-    ((i >> 8) & 0xFF).toString(16) +
-    (i & 0xFF).toString(16);
+function hashColor(str) {
+  const i = hashCode(str);
+  const c = (i & 0x00FFFFFF)
+    .toString(16)
+    .toUpperCase();
+  const background = "00000".substring(0, 6 - c.length) + c;
+  const r = parseInt(background.substring(4, 6), 16);
+  const g = parseInt(background.substring(2, 4), 16);
+  const b = parseInt(background.substring(0, 2), 16);
 
-  return "#" + hex.padStart(6, "0");
+  const isBackgroundDark = (0.2125 * r + 0.7154 * g + 0.0721 * b) <= 110;
+  const textColor = isBackgroundDark ? "#ffffff" : "#000000";
+  return { background: "#" + background, textColor };
 }
