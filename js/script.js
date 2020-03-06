@@ -1,6 +1,19 @@
 const BUGZILLA_DOMAIN = "https://bugzilla.mozilla.org/";
+const USED_FIELDS = [
+  "id",
+  "summary",
+  "status",
+  "resolution",
+  "depends_on",
+  "type",
+  "component",
+  "product",
+  "keywords",
+  "assigned_to",
+];
+
 function getBug(bug) {
-  return fetch(`${BUGZILLA_DOMAIN}/rest/bug/${bug}`)
+  return fetch(`${BUGZILLA_DOMAIN}/rest/bug/${bug}?include_fields=${USED_FIELDS.join(",")}`)
     .then(r => r.json())
     .then(r => r.bugs[0]);
 }
