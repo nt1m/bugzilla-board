@@ -128,9 +128,11 @@ a:any-link:not(:hover) {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  flex-shrink: 0;
   white-space: nowrap;
   padding: 2em;
   padding-bottom: 0;
+  overflow: auto;
 }
 
 #title {
@@ -199,7 +201,7 @@ a:any-link:not(:hover) {
   align-items: start;
   position: relative;
   padding: 2em;
-  flex-grow: 1;
+  flex: 1 1;
   scroll-snap-type: x proximity;
   scroll-padding: 2em;
 }
