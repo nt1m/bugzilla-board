@@ -128,7 +128,8 @@ a:any-link:not(:hover) {
 #header {
   display: flex;
   align-items: center;
-  gap: 1em;
+  flex-wrap: wrap;
+  white-space: nowrap;
 }
 
 #title {
@@ -147,6 +148,11 @@ a:any-link:not(:hover) {
 #title:focus {
   background-color: var(--box-background-color);
   text-decoration: none;
+}
+
+#list-url,
+#list-new {
+  margin-left: 0.5rem;
 }
 
 #list-url::before,

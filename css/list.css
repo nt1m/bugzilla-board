@@ -3,7 +3,7 @@
   background-color: var(--box-background-color);
   border: 1px solid var(--border-color);
   flex: 1 1;
-  min-width: 200px;
+  min-width: 250px;
   border-radius: 4px;
   padding: 1em;
   position: relative;
@@ -14,12 +14,16 @@
   opacity: 0.5;
 }
 
+:host(.dragged) .list-items {
+  display: none;
+}
+
 :host(.dragover)::after {
   content: "";
   position: absolute;
   top: 0;
   right: -1em;
-  height: 100vh;
+  height: 100%;
   margin-right: -2px;
   border-right: 2px dashed var(--link-color);
 }
