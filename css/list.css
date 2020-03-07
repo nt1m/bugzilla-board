@@ -10,7 +10,6 @@
   border-radius: 4px;
   position: relative;
   cursor: move;
-  overflow: hidden;
   scroll-snap-align: start;
 }
 
@@ -46,6 +45,8 @@
   height: 2px;
   margin-bottom: -2px;
   width: 100%;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
 }
 
 ::-webkit-progress-value {
