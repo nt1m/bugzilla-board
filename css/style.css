@@ -237,7 +237,10 @@ dialog {
   padding: 2em;
 }
 
-dialog + .backdrop,
+dialog + .backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
 }
