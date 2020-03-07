@@ -198,7 +198,7 @@ a:any-link:not(:hover) {
   overflow-x: auto;
   align-items: start;
   position: relative;
-  gap: 2em;
+  gap: 1em;
   padding: 2em;
   flex-grow: 1;
   scroll-snap-type: x proximity;
