@@ -44,16 +44,23 @@
   background: none;
   height: 2px;
   margin-bottom: -2px;
+  padding: 0;
   width: 100%;
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-::-webkit-progress-value {
+.list-progress::-webkit-progress-bar {
+  background-color: transparent;
+}
+
+.list-progress::-webkit-progress-value {
   background-color: #45a1ff;
 }
 
-::-moz-progress-bar {
+.list-progress::-moz-progress-bar {
   background-color: #45a1ff;
 }
 
