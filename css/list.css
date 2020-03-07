@@ -16,7 +16,7 @@
 /* card min-width * 2 */
 @media (max-width: 500px) {
   :host {
-    min-width: calc(100% - 1.1em); /* For drag and drop */
+    min-width: 100%;
   }
 }
 
