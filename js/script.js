@@ -59,6 +59,10 @@ function getBoardURL() {
   return base + "?" + searchParams.toString();
 }
 
+function updateURL() {
+  history.pushState([], document.title, getBoardURL());
+}
+
 function setTitle(title) {
   document.getElementById("title").value = title;
   if (title) {
@@ -66,10 +70,7 @@ function setTitle(title) {
   } else {
     document.title = "Bugzilla board";
   }
-}
-
-function updateURL() {
-  window.history.replaceState(getBoardURL());
+  updateURL();
 }
 
 (function init() {

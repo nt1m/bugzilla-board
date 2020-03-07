@@ -69,6 +69,7 @@ customElements.define("bug-list", class List extends HTMLElement {
       if (destination) {
         destination.parentNode.insertBefore(this, destination);
         UI_STATE.lastDropTarget = null;
+        updateURL();
       }
     });
   }
@@ -83,6 +84,7 @@ customElements.define("bug-list", class List extends HTMLElement {
     }
 
     this.shadowRoot.querySelector(".list-name").textContent = newName;
+    updateURL();
     return this.dataset.name = newName;
   }
 
@@ -105,7 +107,13 @@ customElements.define("bug-list", class List extends HTMLElement {
         this.statusText.textContent = "";
       }
     });
+    updateURL();
     return this.dataset.query = newQuery;
+  }
+
+  remove() {
+    super.remove();
+    updateURL();
   }
 
   async fetchAndAppendBugs(query) {
