@@ -121,7 +121,8 @@
 }
 
 .bug:focus {
-  outline: 3px solid #0060df;
+  outline: 2px solid #0060df;
+  outline-offset: -2px;
   -moz-outline-radius: 4px;
 }
 
