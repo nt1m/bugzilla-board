@@ -130,7 +130,8 @@ a:any-link:not(:hover) {
   flex-wrap: wrap;
   flex-shrink: 0;
   white-space: nowrap;
-  padding: 2em;
+  padding-top: 2em;
+  padding-left: 2em;
   padding-bottom: 0;
   overflow: auto;
 }
@@ -146,6 +147,7 @@ a:any-link:not(:hover) {
   flex-grow: 1;
   text-overflow: ellipsis;
   padding: 0.25rem 0.5rem;
+  margin-left: -0.25rem;
   margin-bottom: 0.2em;
 }
 
@@ -154,9 +156,12 @@ a:any-link:not(:hover) {
   text-decoration: none;
 }
 
-#list-url,
+#list-url {
+  margin-right: 0.5rem;
+}
+
 #list-new {
-  margin-left: 0.5rem;
+  margin-right: 2rem;
 }
 
 #list-url::before,
