@@ -121,12 +121,13 @@
   padding-top: 0;
 }
 
-.list-status {
+.list-status:not(:empty) {
   display: block;
 }
 
-.list-items {
+.list-items:not(:empty) {
   cursor: initial;
+  padding-bottom: 0;
 }
 
 /* Bug cards */
@@ -148,14 +149,14 @@
   border-left-color: #a4000f;
 }
 
-.bug:last-child {
-  margin-bottom: 0;
-}
-
 .bug:focus {
   outline: 2px solid #0060df;
   outline-offset: -1px;
   -moz-outline-radius: 4px;
+}
+
+.bug:first-child {
+  margin-top: 1px;
 }
 
 .bug > * {

@@ -26,6 +26,8 @@
 
 html,
 body {
+  font: message-box;
+  font-size: 14px;
   height: 100%;
   box-sizing: border-box;
 }
@@ -33,8 +35,6 @@ body {
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  font: message-box;
-  font-size: 14px;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -209,6 +209,7 @@ a:any-link:not(:hover) {
   align-items: start;
   position: relative;
   padding: 2em;
+  padding-right: 1em;
   flex: 1 1;
   scroll-snap-type: x proximity;
   scroll-padding: 2em;
@@ -229,7 +230,7 @@ a:any-link:not(:hover) {
   max-width: 100%;
 }
 
-#lists > bug-list:not(:last-child) {
+#lists > bug-list {
   margin-right: 1em;
 }
 
