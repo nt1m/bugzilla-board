@@ -103,21 +103,24 @@
 .bug > * {
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block;
 }
 
-.bug-type,
-.bug-assignee,
-.bug-keywords {
-  display: block;
+.bug > *:not(:empty):not(:last-child) {
+  margin-bottom: .67em;
+}
+
+.bug > [data-label]:not(:empty)::before {
+  content: attr(data-label) ": ";
 }
 
 .bug-title {
   font-size: 1.1em;
+  margin-top: 0;
 }
 
 .bug-component {
   border-radius: 4px;
   padding: 0.5em;
-  margin-top: 0.5em;
   display: inline-block;
 }

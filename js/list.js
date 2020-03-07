@@ -123,7 +123,7 @@ customElements.define("bug-list", class List extends HTMLElement {
       if (list != "not_started") {
         element.querySelector(".bug-assignee").textContent = bug.assigned_to_detail.nick || bug.assigned_to_detail.email;
       }
-      element.querySelector(".bug-type").textContent = bug.type;
+      element.querySelector(".bug-type").textContent = bug.type + (bug.priority != "--" ? " - " + bug.priority : "");
       element.querySelector(".bug-keywords").textContent = bug.keywords.join(", ");
 
       let compStr = bug.product + " :: " + bug.component;
