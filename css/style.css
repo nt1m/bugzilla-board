@@ -230,7 +230,7 @@ dialog {
   background-color: var(--card-background-color);
   border-radius: 4px;
   color: inherit;
-  box-shadow: rgba(12, 12, 13, 0.1) 0px 1px 4px;
+  box-shadow: rgba(12, 12, 13, 0.3) 0px 1px 4px;
   min-width: 25%;
   padding: 2em;
 }
