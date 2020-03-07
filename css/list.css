@@ -33,7 +33,7 @@
   content: "";
   position: absolute;
   top: 0;
-  right: -1em;
+  right: -0.5em;
   height: 100%;
   margin-right: -2px;
   border-right: 2px dashed var(--link-color);
