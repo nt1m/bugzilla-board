@@ -28,14 +28,14 @@
   display: none;
 }
 
-:host(.dragover)::after {
+:host(.dragover)::before {
   content: "";
   position: absolute;
   top: 0;
-  right: -0.5em;
+  left: -0.5em;
   height: 100%;
-  margin-right: -2px;
-  border-right: 2px dashed var(--link-color);
+  margin-left: -2px;
+  border-left: 2px dashed var(--link-color);
 }
 
 .list-header {

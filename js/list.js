@@ -64,7 +64,7 @@ customElements.define("bug-list", class List extends HTMLElement {
       this.classList.remove("dragged");
       const destination = UI_STATE.lastDropTarget;
       if (destination) {
-        destination.parentNode.insertBefore(this, destination.nextElementSibling);
+        destination.parentNode.insertBefore(this, destination);
         UI_STATE.lastDropTarget = null;
       }
     });
