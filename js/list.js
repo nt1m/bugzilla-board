@@ -95,8 +95,12 @@ customElements.define("bug-list", class List extends HTMLElement {
     this.statusText.textContent = "Loading";
     this.items.textContent = "";
 
-    this.fetchAndAppendBugs(newQuery).then(() => {
-      this.statusText.textContent = "";
+    this.fetchAndAppendBugs(newQuery).then(results => {
+      if (!results.length) {
+        this.statusText.textContent = "No bugs found";
+      } else {
+        this.statusText.textContent = "";
+      }
     });
     return this.dataset.query = newQuery;
   }
@@ -108,11 +112,7 @@ customElements.define("bug-list", class List extends HTMLElement {
     } catch (e) {
       results = [];
       this.statusText.textContent = e.message;
-      return;
-    }
-
-    if (!results.length) {
-      this.statusText.textContent = "No bugs found";
+      return results;
     }
 
     let bugTemplate = document.getElementById("bug-template").content;
@@ -121,7 +121,7 @@ customElements.define("bug-list", class List extends HTMLElement {
       let bugElement = element.querySelector(".bug");
       bugElement.classList.toggle("resolved", ["VERIFIED", "RESOLVED"].includes(bug.status));
       bugElement.href = BUGZILLA_DOMAIN + "/" + bug.id;
-  
+
       element.querySelector(".bug-title").textContent = bug.summary;
       if (list != "not_started") {
         element.querySelector(".bug-assignee").textContent = bug.assigned_to_detail.nick || bug.assigned_to_detail.email;
@@ -138,6 +138,7 @@ customElements.define("bug-list", class List extends HTMLElement {
       compElement.style.color = compColor;
       return element;
     }));
+    return results;
   }
 
   showEditDialog() {

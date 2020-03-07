@@ -1,13 +1,24 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
   background-color: var(--box-background-color);
   border: 1px solid var(--border-color);
   flex: 1 1;
   min-width: 250px;
+  max-height: 100%;
   border-radius: 4px;
   padding: 1em;
   position: relative;
   cursor: move;
+  scroll-snap-align: start;
+}
+
+/* card min-width * 2 */
+@media (max-width: 500px) {
+  :host {
+    min-width: calc(100% - 1.1em); /* For drag and drop */
+  }
 }
 
 :host(.dragged) {
@@ -30,6 +41,12 @@
 
 .list-header {
   display: flex;
+  margin-bottom: 1em;
+}
+
+.list-items {
+  flex-grow: 1;
+  overflow: auto;
 }
 
 .list-name {
@@ -72,9 +89,8 @@
   background-image: url(../img/edit.svg);
 }
 
-.list-status {
+.list-status:not(:empty) {
   display: block;
-  margin-top: 2em;
 }
 
 .list-items {
@@ -91,7 +107,7 @@
   color: inherit !important;
   text-decoration: none;
   display: block;
-  margin: 1em 0;
+  margin-bottom: 1em;
   padding: 1em;
   overflow: hidden;
 }
