@@ -10,6 +10,7 @@ const USED_FIELDS = [
   "component",
   "product",
   "keywords",
+  "whiteboard",
   "assigned_to",
 ];
 
@@ -136,6 +137,7 @@ customElements.define("bug-list", class List extends HTMLElement {
       }
       element.querySelector(".bug-type").textContent = bug.type + (bug.priority != "--" ? " - " + bug.priority : "");
       element.querySelector(".bug-keywords").textContent = bug.keywords.join(", ");
+      element.querySelector(".bug-whiteboard").textContent = bug.whiteboard;
 
       let compStr = bug.product + " :: " + bug.component;
       let compElement = element.querySelector(".bug-component");

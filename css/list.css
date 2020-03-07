@@ -155,6 +155,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   display: block;
+  font-size: 0.9em;
 }
 
 .bug > *:not(:empty):not(:last-child) {
@@ -162,6 +163,7 @@
 }
 
 .bug > [data-label]:not(:empty)::before {
+  opacity: 0.7;
   content: attr(data-label) ": ";
 }
 
@@ -172,6 +174,6 @@
 
 .bug-component {
   border-radius: 4px;
-  padding: 0.5em;
+  padding: 0.25em 0.5em;
   display: inline-block;
 }
