@@ -209,7 +209,6 @@ a:any-link:not(:hover) {
   align-items: start;
   position: relative;
   padding: 2em;
-  padding-right: 1em;
   flex: 1 1;
   scroll-snap-type: x proximity;
   scroll-padding: 2em;
@@ -230,7 +229,7 @@ a:any-link:not(:hover) {
   max-width: 100%;
 }
 
-#lists > bug-list {
+#lists > bug-list:not(:last-child) {
   margin-right: 1em;
 }
 
