@@ -59,11 +59,27 @@ function getBoardURL() {
   return base + "?" + searchParams.toString();
 }
 
+function setTitle(title) {
+  document.getElementById("title").value = title;
+  if (title) {
+    document.title = title + " - Bugzilla board";
+  } else {
+    document.title = "Bugzilla board";
+  }
+}
+
+function updateURL() {
+  window.history.replaceState(getBoardURL());
+}
+
 (function init() {
   for (const dialog of document.querySelectorAll("dialog")) {
     dialogPolyfill.registerDialog(dialog);
   }
 
+  document.getElementById("title").onchange = function() {
+    setTitle(this.value);
+  };
   document.getElementById("list-new").onclick = showAddDialog;
   const clipboardButton = document.getElementById("list-url");
   clipboardButton.onclick = async () => {
@@ -106,6 +122,6 @@ function getBoardURL() {
     loadPreset(preset);
   }
   if (title) {
-    document.getElementById("title").value = title;
+    setTitle(title);
   }
 })();

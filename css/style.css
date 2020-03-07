@@ -148,7 +148,10 @@ a:any-link:not(:hover) {
   text-overflow: ellipsis;
   padding: 0.25rem 0.5rem;
   margin-left: -0.25rem;
+  margin-right: 0.5rem;
   margin-bottom: 0.2em;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 #title:focus {
