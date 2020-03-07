@@ -40,6 +40,8 @@ customElements.define("bug-list", class List extends HTMLElement {
       this.showEditDialog();
     });
 
+    this.countText = this.shadowRoot.querySelector(".list-count");
+    this.progressBar = this.shadowRoot.querySelector(".list-progress");
     this.statusText = this.shadowRoot.querySelector(".list-status");
     this.items = this.shadowRoot.querySelector(".list-items");
 
@@ -115,12 +117,18 @@ customElements.define("bug-list", class List extends HTMLElement {
       return results;
     }
 
+    let resolvedCount = 0;
     let bugTemplate = document.getElementById("bug-template").content;
     this.items.append(...results.map(bug => {
       let element = bugTemplate.cloneNode(true);
       let bugElement = element.querySelector(".bug");
-      bugElement.classList.toggle("resolved", ["VERIFIED", "RESOLVED"].includes(bug.status));
       bugElement.href = BUGZILLA_DOMAIN + "/" + bug.id;
+
+      let isResolved = ["RESOLVED", "VERIFIED"].includes(bug.status);
+      bugElement.classList.toggle("resolved", isResolved);
+      if (isResolved) {
+        resolvedCount++;
+      }
 
       element.querySelector(".bug-title").textContent = bug.summary;
       if (list != "not_started") {
@@ -138,6 +146,9 @@ customElements.define("bug-list", class List extends HTMLElement {
       compElement.style.color = compColor;
       return element;
     }));
+
+    this.countText.textContent = results.length;
+    this.progressBar.value = (resolvedCount / results.length) * 100;
     return results;
   }
 

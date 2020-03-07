@@ -10,6 +10,7 @@
   border-radius: 4px;
   position: relative;
   cursor: move;
+  overflow: hidden;
   scroll-snap-align: start;
 }
 
@@ -36,6 +37,23 @@
   height: 100%;
   margin-left: -2px;
   border-left: 2px dashed var(--link-color);
+}
+
+.list-progress {
+  -webkit-appearance: none;
+  border: none;
+  background: none;
+  height: 2px;
+  margin-bottom: -2px;
+  width: 100%;
+}
+
+::-webkit-progress-value {
+  background-color: #45a1ff;
+}
+
+::-moz-progress-bar {
+  background-color: #45a1ff;
 }
 
 .list-header {
