@@ -198,10 +198,10 @@ a:any-link:not(:hover) {
   overflow-x: auto;
   align-items: start;
   position: relative;
-  gap: 1em;
   padding: 2em;
   flex-grow: 1;
   scroll-snap-type: x proximity;
+  scroll-padding: 2em;
 }
 
 #lists:empty::before {
@@ -219,6 +219,10 @@ a:any-link:not(:hover) {
   max-width: 100%;
 }
 
+#lists > bug-list:not(:last-child) {
+  margin-right: 1em;
+}
+
 /* Dialog */
 
 dialog {
@@ -229,6 +233,11 @@ dialog {
   box-shadow: rgba(12, 12, 13, 0.1) 0px 1px 4px;
   min-width: 25%;
   padding: 2em;
+}
+
+dialog + .backdrop,
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 dialog h1 {
