@@ -1,0 +1,123 @@
+:host {
+  display: block;
+  background-color: var(--box-background-color);
+  border: 1px solid var(--border-color);
+  flex: 1 1;
+  min-width: 200px;
+  border-radius: 4px;
+  padding: 1em;
+  position: relative;
+  cursor: move;
+}
+
+:host(.dragged) {
+  opacity: 0.5;
+}
+
+:host(.dragover)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -1em;
+  height: 100vh;
+  margin-right: -2px;
+  border-right: 2px dashed var(--link-color);
+}
+
+.list-header {
+  display: flex;
+}
+
+.list-name {
+  flex: 1 1;
+  font-weight: bold;
+}
+
+.list-delete,
+.list-edit {
+  cursor: pointer;
+  background: none;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: none;
+  margin-left: 1em;
+  width: 1.15em;
+  height: 1.15em;
+  font-size: inherit;
+  padding: 0;
+  display: inline-block;
+}
+
+.list-delete:not(:hover):not(:focus),
+.list-edit:not(:hover):not(:focus) {
+  opacity: 0.8;
+}
+
+@media (prefers-color-scheme: dark) {
+  .list-delete,
+  .list-edit {
+    filter: invert(1);
+  }
+}
+
+.list-delete {
+  background-image: url(../img/delete.svg);
+}
+
+.list-edit {
+  background-image: url(../img/edit.svg);
+}
+
+.list-status {
+  display: block;
+  margin-top: 2em;
+}
+
+.list-items {
+  cursor: unset;
+}
+
+/* Bug cards */
+
+.bug {
+  background-color: var(--card-background-color);
+  border-radius: 4px;
+  box-shadow: rgba(12, 12, 13, 0.1) 0px 1px 4px;
+  color: inherit !important;
+  text-decoration: none;
+  display: block;
+  margin: 1em 0;
+  padding: 1em;
+  overflow: hidden;
+}
+
+.bug:last-child {
+  margin-bottom: 0;
+}
+
+.bug:focus {
+  outline: 3px solid #0060df;
+  -moz-outline-radius: 4px;
+}
+
+.bug > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bug-type,
+.bug-assignee,
+.bug-keywords {
+  display: block;
+}
+
+.bug-title {
+  font-size: 1.1em;
+}
+
+.bug-component {
+  border-radius: 4px;
+  padding: 0.5em;
+  margin-top: 0.5em;
+  display: inline-block;
+}

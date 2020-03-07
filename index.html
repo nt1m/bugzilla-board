@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bugzilla board</title>
+  <title>Bugzilla list</title>
+  <link rel="stylesheet" href="css/dialog-polyfill.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -15,17 +16,44 @@
     </a>
   </template>
 
-  <div id="header">
-    <input type="text" id="query" placeholder="Enter quicksearch query">
-    <a href="https://bugzilla.mozilla.org/page.cgi?id=quicksearch.html">Quicksearch syntax</a>
-  </div>
-  <div id="status"></div>
-  <div id="boards">
-    <div id="not_started" class="board" data-title="Not Started"></div>
-    <div id="in_progress" class="board" data-title="In Progress"></div>
-    <div id="done" class="board" data-title="Done"></div>
-  </div>
+  <template id="list">
+    <link rel="stylesheet" href="css/list.css">
+    <div class="list-header">
+      <span class="list-name"></span>
+      <button class="list-delete" title="Delete list"></button>
+      <button class="list-edit" title="Edit list"></button>
+    </div>
+    <div class="list-status"></div>
+    <div class="list-items"></div>
+  </template>
 
+  <div id="header">
+    <input id="title" placeholder="Untitled Board">
+    <button id="list-url" class="button">Copy link</button>
+    <button id="list-new" class="button primary">Add a new list</button>
+  </div>
+  <div id="lists"></div>
+
+  <dialog id="edit-list">
+    <h1 id="edit-list-title"></h1>
+    <form>
+      <div class="form-row">
+        <label for="edit-list-name">Name</label>
+        <input type="text" class="text-input" name="name" id="edit-list-name"/>
+      </div>
+      <div class="form-row">
+        <label for="edit-list-query">Query (uses <a href="https://bugzilla.mozilla.org/page.cgi?id=quicksearch.html">quicksearch syntax</a>)</label>
+        <input type="text" class="text-input" name="query" id="edit-list-query"/>
+      </div>
+      <div class="form-row">
+        <button type="button" class="button" id="edit-list-cancel">Cancel</button>
+        <button type="submit" class="button primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/dialog-polyfill.js"></script>
+  <script src="js/list.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>
