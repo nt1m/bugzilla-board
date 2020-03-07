@@ -85,6 +85,7 @@
 
 .bug {
   background-color: var(--card-background-color);
+  border-left: 4px solid #058b00;
   border-radius: 4px;
   box-shadow: rgba(12, 12, 13, 0.1) 0px 1px 4px;
   color: inherit !important;
@@ -93,6 +94,10 @@
   margin: 1em 0;
   padding: 1em;
   overflow: hidden;
+}
+
+.bug.resolved {
+  border-left-color: #a4000f;
 }
 
 .bug:last-child {

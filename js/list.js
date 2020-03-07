@@ -118,7 +118,10 @@ customElements.define("bug-list", class List extends HTMLElement {
     let bugTemplate = document.getElementById("bug-template").content;
     this.items.append(...results.map(bug => {
       let element = bugTemplate.cloneNode(true);
-      element.querySelector(".bug").href = BUGZILLA_DOMAIN + "/" + bug.id;
+      let bugElement = element.querySelector(".bug");
+      bugElement.classList.toggle("resolved", ["VERIFIED", "RESOLVED"].includes(bug.status));
+      bugElement.href = BUGZILLA_DOMAIN + "/" + bug.id;
+  
       element.querySelector(".bug-title").textContent = bug.summary;
       if (list != "not_started") {
         element.querySelector(".bug-assignee").textContent = bug.assigned_to_detail.nick || bug.assigned_to_detail.email;
