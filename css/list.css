@@ -57,11 +57,11 @@
 }
 
 .list-progress::-webkit-progress-value {
-  background-color: #45a1ff;
+  background-color: #0a84ff;
 }
 
 .list-progress::-moz-progress-bar {
-  background-color: #45a1ff;
+  background-color: #0a84ff;
 }
 
 .list-header {
@@ -176,11 +176,11 @@
 }
 
 .bug.resolved {
-  border-left-color: #d70022;
+  border-left-color: #0a84ff;
 }
 
 .bug:focus {
-  outline: 2px solid #0060df;
+  outline: 2px solid currentColor;
   outline-offset: -1px;
   -moz-outline-radius: 4px;
 }
