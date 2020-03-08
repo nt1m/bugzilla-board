@@ -141,6 +141,7 @@ a:any-link:not(:hover) {
   border: none;
   border-radius: 4px;
   text-decoration: dashed underline;
+  font: inherit;
   font-size: 1.75em;
   font-weight: bold;
   color: inherit;

@@ -58,7 +58,7 @@ customElements.define("bug-list", class List extends HTMLElement {
     });
 
     this.addEventListener("dragstart", (ev) => {
-      if (!ev.originalTarget.classList.contains("bug")) {
+      if (!ev.composedPath()[0].classList.contains("bug")) {
         this.classList.add("dragged");
       }
     });
