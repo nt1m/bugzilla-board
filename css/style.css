@@ -13,13 +13,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background-color: #333;
+    --background-color: #292929;
     --text-color: #eee;
     --link-color: #45a1ff;
     --link-color-visited: #c876ff;
     --border-color: #555;
-    --box-background-color: #1a1a1a;
-    --card-background-color: #444;
+    --box-background-color: #181818;
+    --card-background-color: #303030;
     --background-color-shade: 255, 255, 255;
   }
 }

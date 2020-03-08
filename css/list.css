@@ -66,10 +66,10 @@
 
 .list-header {
   display: flex;
-  padding: 1em;
   flex-shrink: 0;
   flex-wrap: wrap;
   overflow: hidden;
+  align-items: flex-start;
 }
 
 .list-items {
@@ -77,35 +77,57 @@
   overflow: auto;
 }
 
+.list-name,
+.list-count,
+.list-delete,
+.list-edit {
+  padding: 1em 0.5em;
+  flex-shrink: 0;
+}
+
 .list-name {
+  padding-left: 1em;
   flex: 1 1;
   font-weight: bold;
 }
 
-.list-count,
-.list-delete,
 .list-edit {
-  margin-left: 1em;
-  flex-shrink: 0;
+  padding-right: 1em;
 }
 
 .list-delete,
 .list-edit {
   cursor: pointer;
   background: none;
-  background-size: cover;
-  background-repeat: no-repeat;
   border: none;
-  width: 1.15em;
-  height: 1.15em;
-  font-size: inherit;
-  padding: 0;
+  font: inherit;
   display: inline-block;
+  line-height: 0;
+}
+
+.list-delete::before,
+.list-edit::before {
+  content: "";
+  display: inline-block;
+  background-size: cover;
+  width: 1.145em;
+  height: 1.145em;
+  border-radius: 2px;
 }
 
 .list-delete:not(:hover):not(:focus),
 .list-edit:not(:hover):not(:focus) {
   opacity: 0.8;
+}
+
+.list-delete:focus::before,
+.list-edit:focus::before {
+  box-shadow: 0 0 0 2px #333;
+}
+
+.list-delete::-moz-focus-inner,
+.list-edit::-moz-focus-inner {
+  border: none;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -115,11 +137,11 @@
   }
 }
 
-.list-delete {
+.list-delete::before {
   background-image: url(../img/delete.svg);
 }
 
-.list-edit {
+.list-edit::before {
   background-image: url(../img/edit.svg);
 }
 
@@ -154,7 +176,7 @@
 }
 
 .bug.resolved {
-  border-left-color: #a4000f;
+  border-left-color: #d70022;
 }
 
 .bug:focus {
@@ -179,7 +201,7 @@
 }
 
 .bug > [data-label]:not(:empty)::before {
-  opacity: 0.7;
+  opacity: 0.78;
   content: attr(data-label) ": ";
 }
 
