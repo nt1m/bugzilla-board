@@ -11,14 +11,10 @@ const USED_FIELDS = [
   "product",
   "keywords",
   "whiteboard",
-  "assigned_to",
+  "assigned_to"
 ];
 
-customElements.define("bug-list", class List extends HTMLElement {
-  constructor() {
-    super();
-  }
-
+class List extends HTMLElement {
   connectedCallback() {
     if (this.shadowRoot) {
       return;
@@ -46,30 +42,30 @@ customElements.define("bug-list", class List extends HTMLElement {
     this.statusText = this.shadowRoot.querySelector(".list-status");
     this.items = this.shadowRoot.querySelector(".list-items");
 
-    this.addEventListener("dragenter", (ev) => {
+    this.addEventListener("dragenter", () => {
       if (document.querySelector(".dragged")) {
         this.classList.add("dragover");
-        UI_STATE.lastDropTarget = this;
+        window.UI_STATE.lastDropTarget = this;
       }
     });
 
-    this.addEventListener("dragleave", (ev) => {
+    this.addEventListener("dragleave", () => {
       this.classList.remove("dragover");
     });
 
-    this.addEventListener("dragstart", (ev) => {
+    this.addEventListener("dragstart", ev => {
       if (!ev.composedPath()[0].classList.contains("bug")) {
         this.classList.add("dragged");
       }
     });
 
-    this.addEventListener("dragend", (ev) => {
+    this.addEventListener("dragend", () => {
       this.classList.remove("dragged");
-      const destination = UI_STATE.lastDropTarget;
+      const destination = window.UI_STATE.lastDropTarget;
       if (destination) {
         destination.parentNode.insertBefore(this, destination);
-        UI_STATE.lastDropTarget = null;
-        updateURL();
+        window.UI_STATE.lastDropTarget = null;
+        window.updateURL();
       }
     });
   }
@@ -79,13 +75,13 @@ customElements.define("bug-list", class List extends HTMLElement {
   }
 
   set name(newName) {
-    if (this.name == newName) {
+    if (this.name === newName) {
       return;
     }
-  
+
     this.shadowRoot.querySelector(".list-name").textContent = newName;
     this.dataset.name = newName;
-    updateURL();
+    window.updateURL();
   }
 
   get query() {
@@ -93,7 +89,7 @@ customElements.define("bug-list", class List extends HTMLElement {
   }
 
   set query(newQuery) {
-    if (this.query == newQuery) {
+    if (this.query === newQuery) {
       return;
     }
 
@@ -108,12 +104,12 @@ customElements.define("bug-list", class List extends HTMLElement {
       }
     });
     this.dataset.query = newQuery;
-    updateURL();
+    window.updateURL();
   }
 
   remove() {
     super.remove();
-    updateURL();
+    window.updateURL();
   }
 
   async fetchAndAppendBugs(query) {
@@ -127,35 +123,42 @@ customElements.define("bug-list", class List extends HTMLElement {
     }
 
     let resolvedCount = 0;
-    let bugTemplate = document.getElementById("bug-template").content;
-    this.items.append(...results.map(bug => {
-      let element = bugTemplate.cloneNode(true);
-      let bugElement = element.querySelector(".bug");
+    const bugTemplate = document.getElementById("bug-template").content;
+
+    const elements = results.map(bug => {
+      const element = bugTemplate.cloneNode(true);
+      const bugElement = element.querySelector(".bug");
       bugElement.href = BUGZILLA_DOMAIN + "/" + bug.id;
 
-      let isResolved = ["RESOLVED", "VERIFIED"].includes(bug.status);
+      const isResolved = ["RESOLVED", "VERIFIED"].includes(bug.status);
       bugElement.classList.toggle("resolved", isResolved);
       if (isResolved) {
         resolvedCount++;
       }
 
       element.querySelector(".bug-title").textContent = bug.summary;
-      if (list != "not_started") {
-        element.querySelector(".bug-assignee").textContent = bug.assigned_to_detail.nick || bug.assigned_to_detail.email;
-      }
-      element.querySelector(".bug-type").textContent = bug.type + (bug.priority != "--" ? " - " + bug.priority : "");
-      element.querySelector(".bug-keywords").textContent = bug.keywords.join(", ");
+
+      element.querySelector(".bug-assignee").textContent =
+        bug.assigned_to_detail.nick || bug.assigned_to_detail.email;
+
+      const priorityStr = bug.priority !== "--" ? " - " + bug.priority : "";
+      element.querySelector(".bug-type").textContent = bug.type + priorityStr;
+
+      const keywordsStr = bug.keywords.join(", ");
+      element.querySelector(".bug-keywords").textContent = keywordsStr;
+
       element.querySelector(".bug-whiteboard").textContent = bug.whiteboard;
 
-      let compStr = bug.product + " :: " + bug.component;
-      let compElement = element.querySelector(".bug-component");
+      const compStr = bug.product + " :: " + bug.component;
+      const compElement = element.querySelector(".bug-component");
       compElement.textContent = compStr;
 
-      let { background: compBackground, textColor: compColor } = hashColor(compStr);
+      const { bg: compBackground, text: compColor } = hashColor(compStr);
       compElement.style.backgroundColor = compBackground;
       compElement.style.color = compColor;
       return element;
-    }));
+    });
+    this.items.append(...elements);
 
     this.countText.textContent = results.length;
     this.progressBar.value = (resolvedCount / results.length) * 100;
@@ -185,11 +188,15 @@ customElements.define("bug-list", class List extends HTMLElement {
     };
     dialog.showModal();
   }
-});
+}
+customElements.define("bug-list", List);
 
 async function getQuickSearchResults(query) {
-  const json = await fetch(`${BUGZILLA_DOMAIN}/rest/bug?quicksearch=${encodeURIComponent(query)}&include_fields=${USED_FIELDS.join(",")}`)
-    .then(r => r.json());
+  const json = await fetch(
+    `${BUGZILLA_DOMAIN}/rest/bug?quicksearch=${encodeURIComponent(
+      query
+    )}&include_fields=${USED_FIELDS.join(",")}`
+  ).then(r => r.json());
   if (json.error) {
     throw new Error(json.message);
   }
@@ -205,16 +212,13 @@ function hashCode(str) {
 }
 
 function hashColor(str) {
-  const i = hashCode(str);
-  const c = (i & 0x00FFFFFF)
-    .toString(16)
-    .toUpperCase();
+  const c = (hashCode(str) & 0x00ffffff).toString(16).toUpperCase();
   const background = "00000".substring(0, 6 - c.length) + c;
   const r = parseInt(background.substring(4, 6), 16);
   const g = parseInt(background.substring(2, 4), 16);
   const b = parseInt(background.substring(0, 2), 16);
 
-  const isBackgroundDark = (0.2125 * r + 0.7154 * g + 0.0721 * b) <= 110;
+  const isBackgroundDark = 0.2125 * r + 0.7154 * g + 0.0721 * b <= 110;
   const textColor = isBackgroundDark ? "#ffffff" : "#000000";
-  return { background: "#" + background, textColor };
+  return { bg: "#" + background, text: textColor };
 }

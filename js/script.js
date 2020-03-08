@@ -1,14 +1,14 @@
 window.UI_STATE = {
-  lastDropTarget: null,
+  lastDropTarget: null
 };
 
 async function loadPreset(preset) {
   document.body.classList.add("loading");
 
-  let lists = document.getElementById("lists");
+  const lists = document.getElementById("lists");
   lists.textContent = "";
-  for (let {name, query} of preset) {
-    let list = document.createElement("bug-list");
+  for (const { name, query } of preset) {
+    const list = document.createElement("bug-list");
     lists.append(list);
     list.name = name;
     list.query = query;
@@ -32,7 +32,7 @@ function showAddDialog() {
 
   const form = dialog.querySelector("form");
   form.onsubmit = e => {
-    let list = document.createElement("bug-list");
+    const list = document.createElement("bug-list");
     document.getElementById("lists").append(list);
     list.name = nameInput.value;
     list.query = queryInput.value;
@@ -75,7 +75,7 @@ function setTitle(title) {
 
 (function init() {
   for (const dialog of document.querySelectorAll("dialog")) {
-    dialogPolyfill.registerDialog(dialog);
+    window.dialogPolyfill.registerDialog(dialog);
   }
 
   document.getElementById("title").onchange = function() {
@@ -88,24 +88,24 @@ function setTitle(title) {
     const lastTextContent = clipboardButton.textContent;
     clipboardButton.textContent = "Copied";
     clipboardButton.classList.add("copied");
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     clipboardButton.textContent = lastTextContent;
     clipboardButton.classList.remove("copied");
   };
 
-  let searchParams = new URLSearchParams(location.search);
+  const searchParams = new URLSearchParams(location.search);
   let title = searchParams.get("title");
-  let names = searchParams.getAll("name");
-  let queries = searchParams.getAll("query");
+  const names = searchParams.getAll("name");
+  const queries = searchParams.getAll("query");
 
-  let bugId = searchParams.get("id");
+  const bugId = searchParams.get("id");
   let preset = [];
 
   if (!queries.length && bugId) {
     preset = [
       { name: "Not Started", query: `status:NEW blocked:${bugId}` },
       { name: "In Progress", query: `status:ASSIGNED blocked:${bugId}` },
-      { name: "Done", query: `resolution:FIXED blocked:${bugId}` },
+      { name: "Done", query: `resolution:FIXED blocked:${bugId}` }
     ];
 
     if (!title) {
@@ -115,7 +115,7 @@ function setTitle(title) {
 
   if (queries.length) {
     for (let i = 0; i < queries.length; i++) {
-      let name = names[i] || "";
+      const name = names[i] || "";
       preset.push({ name, query: queries[i] });
     }
   }
