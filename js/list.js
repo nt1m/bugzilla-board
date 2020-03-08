@@ -82,10 +82,10 @@ customElements.define("bug-list", class List extends HTMLElement {
     if (this.name == newName) {
       return;
     }
-
+  
     this.shadowRoot.querySelector(".list-name").textContent = newName;
+    this.dataset.name = newName;
     updateURL();
-    return this.dataset.name = newName;
   }
 
   get query() {
@@ -107,8 +107,8 @@ customElements.define("bug-list", class List extends HTMLElement {
         this.statusText.textContent = "";
       }
     });
+    this.dataset.query = newQuery;
     updateURL();
-    return this.dataset.query = newQuery;
   }
 
   remove() {

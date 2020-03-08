@@ -51,7 +51,7 @@ function getBoardURL() {
     searchParams.append("title", titleInput.value);
   }
   for (const list of document.querySelectorAll("bug-list")) {
-    searchParams.append("name", list.name);
+    searchParams.append("name", list.name || "");
     searchParams.append("query", list.query);
   }
 
@@ -115,7 +115,7 @@ function setTitle(title) {
 
   if (queries.length) {
     for (let i = 0; i < queries.length; i++) {
-      let name = names[i] || "Untitled";
+      let name = names[i] || "";
       preset.push({ name, query: queries[i] });
     }
   }
