@@ -96,11 +96,11 @@ class List extends HTMLElement {
     this.statusText.textContent = "Loading";
     this.items.textContent = "";
 
-    this.fetchAndAppendBugs(newQuery).then(results => {
-      if (!results.length) {
+    this.fetchAndAppendBugs(newQuery).then(({ results, message }) => {
+      if (!results.length && !message) {
         this.statusText.textContent = "No bugs found";
       } else {
-        this.statusText.textContent = "";
+        this.statusText.textContent = message;
       }
     });
     this.dataset.query = newQuery;
@@ -114,12 +114,12 @@ class List extends HTMLElement {
 
   async fetchAndAppendBugs(query) {
     let results;
+    let message = "";
     try {
       results = await getQuickSearchResults(query);
     } catch (e) {
       results = [];
-      this.statusText.textContent = e.message;
-      return results;
+      message = e.message;
     }
 
     let resolvedCount = 0;
@@ -161,8 +161,12 @@ class List extends HTMLElement {
     this.items.append(...elements);
 
     this.countText.textContent = results.length;
-    this.progressBar.value = (resolvedCount / results.length) * 100;
-    return results;
+    if (results.length) {
+      this.progressBar.value = (resolvedCount / results.length) * 100;
+    } else {
+      this.progressBar.value = 0;
+    }
+    return { results, message };
   }
 
   showEditDialog() {
